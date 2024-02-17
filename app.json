@@ -7,9 +7,9 @@
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
     "splash": {
-      "image": "./assets/splash.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "image": "./assets/splash4.png",
+      "resizeMode": "repeat",
+      "backgroundColor": "grey"
     },
     "assetBundlePatterns": [
       "**/*"
@@ -21,10 +21,31 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "permissions": [
+        "android.permission.RECORD_AUDIO"
+      ],
+      "package": "com.shamitech.Farmer"
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "plugins": [
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "The app accesses your photos to let you share them with your friends."
+        }
+      ]
+    ],
+    "permissions": [
+      "camera",
+      "mediaLibrary"
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "afa7dc80-ba5d-4d81-8afe-b502f7fa5d0e"
+      }
     }
   }
 }

@@ -1,101 +1,26 @@
-import React, { useRef } from "react";
-import {
-  StyleSheet,
-  Text,
-  View,
-  ImageBackground,
-  TouchableOpacity,
-  PanResponder,
-  Animated,
-} from "react-native";
-import { BottomSheet } from "@rneui/themed";
+// import * as data from "../application.json";
+// const email = data.name;
+// console.log(email);
 
-const Test = () => {
-  const leftBottomSheetRef = useRef(null);
-  const rightBottomSheetRef = useRef(null);
+import { StyleSheet, Text, View } from "react-native";
+import React from "react";
+import { Button } from "@rneui/themed";
 
-  const leftPanResponder = PanResponder.create({
-    onStartShouldSetPanResponder: () => true,
-    onPanResponderMove: (_, gestureState) => {
-      if (gestureState.dx < -50) {
-        // Swipe left
-        leftBottomSheetRef.current?.open();
-      }
-    },
-  });
+const Test = ({ navigation }) => {
+  const customData = require("../application.json");
 
-  const rightPanResponder = PanResponder.create({
-    onStartShouldSetPanResponder: () => true,
-    onPanResponderMove: (_, gestureState) => {
-      if (gestureState.dx > 50) {
-        // Swipe right
-        rightBottomSheetRef.current?.open();
-      }
-    },
-  });
+  const btnLogin = () => {
+    navigation.navigate("Login");
+  };
 
   return (
-    <ImageBackground
-      source={require("../../assets/onboarding.png")}
-      style={{ width: "100%", height: "100%" }}
-      {...leftPanResponder.panHandlers}
-      {...rightPanResponder.panHandlers}
-    >
-      <TouchableOpacity
-        onPress={() => leftBottomSheetRef.current?.open()}
-        style={styles.buttonContainer}
-      >
-        <Text style={styles.buttonText}>Open Left Bottom Sheet</Text>
-      </TouchableOpacity>
-
-      <TouchableOpacity
-        onPress={() => rightBottomSheetRef.current?.open()}
-        style={styles.buttonContainer}
-      >
-        <Text style={styles.buttonText}>Open Right Bottom Sheet</Text>
-      </TouchableOpacity>
-
-      <BottomSheet
-        ref={leftBottomSheetRef}
-        containerStyle={styles.bottomSheetContainer}
-      >
-        <View style={styles.bottomSheetContent}>
-          <Text>Left Sheet Content</Text>
-        </View>
-      </BottomSheet>
-
-      <BottomSheet
-        ref={rightBottomSheetRef}
-        containerStyle={styles.bottomSheetContainer}
-      >
-        <View style={styles.bottomSheetContent}>
-          <Text>Right Sheet Content</Text>
-        </View>
-      </BottomSheet>
-    </ImageBackground>
+    <View style={{ marginTop: 200 }}>
+      <Text>Test</Text>
+      <Button title={"Login"} onPress={btnLogin} />
+    </View>
   );
 };
 
 export default Test;
 
-const styles = StyleSheet.create({
-  buttonContainer: {
-    padding: 16,
-    backgroundColor: "rgba(255, 255, 255, 0.8)",
-    borderRadius: 8,
-    margin: 16,
-    alignItems: "center",
-  },
-  buttonText: {
-    fontSize: 16,
-    fontWeight: "bold",
-    color: "#333",
-  },
-  bottomSheetContainer: {
-    backgroundColor: "transparent",
-  },
-  bottomSheetContent: {
-    padding: 16,
-    backgroundColor: "white",
-  },
-});
+const styles = StyleSheet.create({});

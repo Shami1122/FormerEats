@@ -6,11 +6,10 @@ import {
   TextInput,
   TouchableOpacity,
 } from "react-native";
-import ResetPassword from "./resetPassword";
 
 const VerifyOtpPage = ({ navigation }) => {
-  const [otp, setOtp] = useState(["", "", "", "", ""]);
-  const otpInputs = Array(5)
+  const [otp, setOtp] = useState(["", "", "", "", "", ""]); // Updated to include 6 boxes
+  const otpInputs = Array(6) // Updated to create 6 refs
     .fill(null)
     .map(() => useRef(null));
 
@@ -20,8 +19,34 @@ const VerifyOtpPage = ({ navigation }) => {
   };
 
   const handleVerifyOtp = () => {
-    console.log("Verifying OTP:", otp.join(""));
-    navigation.navigate(ResetPassword);
+    const OTP = "895642";
+
+    if (otp.every((value) => value === "")) {
+      alert(
+        JSON.stringify({
+          success: false,
+          message: "OTP cannot be empty.",
+        })
+      );
+    } else if (otp.join("") !== OTP) {
+      alert(
+        JSON.stringify({
+          success: false,
+          message: "Invalid OTP.",
+        })
+      );
+    } else {
+      // Rest of your code for handling a valid OTP
+      const token = "895642";
+      alert(
+        JSON.stringify({
+          success: true,
+          message: "OTP verified successful.",
+          token: token,
+        })
+      );
+      navigation.navigate("ResetPassword");
+    }
   };
 
   const handleKeyPress = (index, key) => {
@@ -119,7 +144,7 @@ const styles = StyleSheet.create({
     borderWidth: 0.5,
     borderColor: "#A0A0A0",
     borderRadius: 8,
-    marginRight: 18,
+    marginRight: 5,
     textAlign: "center",
     fontSize: 20,
     backgroundColor: "lightgrey",

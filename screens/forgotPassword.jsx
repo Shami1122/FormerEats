@@ -7,14 +7,24 @@ import {
   TouchableOpacity,
 } from "react-native";
 import { Feather } from "@expo/vector-icons";
-import Login from "./login";
-import Otp from "./otp";
+import * as data from "../application.json";
 
 const ForgotPassword = ({ navigation }) => {
   const [phoneNumber, setPhoneNumber] = useState("");
 
   const btnSendCode = () => {
-    navigation.navigate(Otp);
+    const phoneNo = "1984512598";
+    if (phoneNumber === phoneNo) {
+      alert(
+        JSON.stringify({
+          success: true,
+          message: "OTP sent to your mobile.",
+        })
+      );
+      navigation.navigate("VerifyOtpPage");
+    } else {
+      alert("Account with this mobile number does not exist.");
+    }
   };
 
   const handlePhoneNumberChange = (input) => {
@@ -25,11 +35,11 @@ const ForgotPassword = ({ navigation }) => {
 
   const isPhoneNumberValid = () => {
     // Check if the phone number is valid (e.g., required length)
-    return phoneNumber.length === 12; // Change the condition based on your requirement
+    return phoneNumber.length === 10; // Change the condition based on your requirement
   };
 
   const btnLogin = () => {
-    navigation.navigate(Login);
+    navigation.navigate("Login");
   };
 
   return (
@@ -74,16 +84,15 @@ const ForgotPassword = ({ navigation }) => {
       </View>
       {phoneNumber.length > 0 && !isPhoneNumberValid() && (
         <Text style={styles.errorText}>
-          Please enter a valid 12-digit phone number with country code
+          Please enter a valid 10-digit phone number with country code
         </Text>
       )}
       <TouchableOpacity
         style={styles.loginButton}
         disabled={!isPhoneNumberValid()}
+        onPress={btnSendCode}
       >
-        <Text style={styles.loginButtonText} onPress={btnSendCode}>
-          Send Code
-        </Text>
+        <Text style={styles.loginButtonText}>Send Code</Text>
       </TouchableOpacity>
     </View>
   );

@@ -5,18 +5,54 @@ import {
   View,
   TextInput,
   TouchableOpacity,
+  Alert,
 } from "react-native";
 import { Feather } from "@expo/vector-icons";
+import * as data from "../application.json";
 
 const ResetPassword = ({ navigation }) => {
   const [newPassword, setNewPassword] = useState("");
   const [confirmNewPassword, setConfirmNewPassword] = useState("");
 
+  const token = "895642";
+  const password = data.password;
+
   const handleSubmit = () => {
-    // Implement logic to handle password reset
-    console.log("New Password:", newPassword);
-    console.log("Confirm New Password:", confirmNewPassword);
-    // Add logic for password reset submission
+    if (newPassword !== confirmNewPassword) {
+      Alert.alert("Error", "Password and confirm password do not match.");
+    } else if (newPassword.length < 6) {
+      Alert.alert("Error", "Password must be at least 6 characters long.");
+    } else if (newPassword === password) {
+      Alert.alert(
+        "Error",
+        "New password cannot be the same as the old password."
+      );
+    } else if (tokenExpired()) {
+      Alert.alert(
+        "Error",
+        "Your password reset token has expired. Please request a new one."
+      );
+    } else {
+      // Implement the logic to handle a successful password reset
+      console.log("New Password:", newPassword);
+      console.log("Confirm New Password:", confirmNewPassword);
+      // Add logic for password reset submission
+
+      alert(
+        JSON.stringify({
+          success: "true",
+          message: "Your password has been successfully changed.",
+          is_verified: "true",
+        })
+      );
+      navigation.navigate("Login");
+    }
+  };
+
+  const tokenExpired = () => {
+    // Implement logic to check if the reset token is expired
+    // Return true if expired, false otherwise
+    return false; // Replace with actual implementation
   };
 
   return (
@@ -35,24 +71,23 @@ const ResetPassword = ({ navigation }) => {
           Login
         </Text>
       </View>
-      <View style={{ marginTop: 30 }}>
-        <View style={styles.passwordInputContainer}>
-          <View style={styles.lockIconContainer}>
-            <Feather
-              name="lock"
-              size={24}
-              color="black"
-              style={styles.lockIcon}
-            />
-          </View>
-          <TextInput
-            style={styles.passwordInput}
-            placeholder="New Password"
-            secureTextEntry
-            value={newPassword}
-            onChangeText={(text) => setNewPassword(text)}
+
+      <View style={styles.passwordInputContainer}>
+        <View style={styles.lockIconContainer}>
+          <Feather
+            name="lock"
+            size={24}
+            color="black"
+            style={styles.lockIcon}
           />
         </View>
+        <TextInput
+          style={styles.passwordInput}
+          placeholder="New Password"
+          secureTextEntry
+          value={newPassword}
+          onChangeText={(text) => setNewPassword(text)}
+        />
       </View>
 
       <View style={styles.passwordInputContainer}>
@@ -119,7 +154,6 @@ const styles = StyleSheet.create({
   passwordInput: {
     width: "100%",
     height: 50,
-
     borderColor: "#A0A0A0",
     borderRadius: 8,
     paddingLeft: 45, // Adjust the padding to accommodate the icon
